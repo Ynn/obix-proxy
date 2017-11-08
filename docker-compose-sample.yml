@@ -1,0 +1,12 @@
+version: '3'
+services:
+  obix-proxy:
+    image: alpine
+    volumes :
+      - ./proxy:/app/proxy
+    command : /app/proxy
+    ports:
+      - 7777:8080
+    environment:
+      - OBIX_SERVER_URL=http://localhost:8080/
+      - OBIX_NAME=my-obix
