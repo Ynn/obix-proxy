@@ -3,7 +3,6 @@ Example docker-compose.yml :
 version: '3'
 services:
   obix-proxy:
-    build: .
     image: nnynn/obix-proxy:latest
     ports:
       - 7777:8080
