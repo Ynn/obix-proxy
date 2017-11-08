@@ -18,6 +18,7 @@ type ObixValue struct {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	url := os.Getenv("OBIX_SERVER_URL") + r.URL.Path[1:]
+	fmt.Printf("retrieve %s \n", url)
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -84,6 +85,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	fmt.Printf("Starting proxy for %s \n", os.Getenv("OBIX_SERVER_URL"))
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
