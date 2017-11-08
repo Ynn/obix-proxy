@@ -24,7 +24,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: tr}
-	resp, err := client.Get(url)
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Add("Host",r.Header.Get("Host"))
+	resp, err := client.Do(req)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
