@@ -7,6 +7,7 @@ import (
 	"encoding/xml"
 	"time"
 	"os"
+	"crypto/tls"
 )
 
 type ObixValue struct {
@@ -17,7 +18,12 @@ type ObixValue struct {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	url := os.Getenv("OBIX_SERVER_URL") + r.URL.Path[1:]
-	resp, err := http.Get(url)
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client := &http.Client{Transport: tr}
+	resp, err := client.Get(url)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
